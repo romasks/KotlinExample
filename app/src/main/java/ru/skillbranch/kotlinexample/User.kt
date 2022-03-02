@@ -138,14 +138,14 @@ class User private constructor(
         fun makeUser(
             fullName: String,
             email: String? = null,
-            passwoed: String? = null,
+            password: String? = null,
             phone: String? = null
         ): User {
             val (firstName, lastName) = fullName.fullNameToPair()
 
             return when {
                 !phone.isNullOrBlank() -> User(firstName, lastName, phone)
-                !email.isNullOrBlank() && !passwoed.isNullOrBlank() -> User(firstName, lastName, email, passwoed)
+                !email.isNullOrBlank() && !password.isNullOrBlank() -> User(firstName, lastName, email, password)
                 else -> throw IllegalArgumentException("Email or phone must not be null or blank")
             }
         }
