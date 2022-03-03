@@ -47,17 +47,9 @@ object UserHolder {
         map[phone] = user
     }
 
-    fun importUsers(lines: List<String>): List<User?> {
-        val users = arrayListOf<User?>()
-        lines.forEach { line ->
-            if (line.isBlank()) {
-                users.add(null)
-            } else {
-                val (fullName, email, salt_hash, phone) = line.split(";")
-                users.add(User.importUser(fullName, email, salt_hash, phone))
-            }
-        }
-        return users
+    fun importUsers(lines: List<String>): List<User> = lines.map { line ->
+        val (fullName, email, salt_hash, phone) = line.split(";")
+        User.importUser(fullName, email, salt_hash, phone)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
