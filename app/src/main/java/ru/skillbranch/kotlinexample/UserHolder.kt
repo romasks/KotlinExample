@@ -47,6 +47,19 @@ object UserHolder {
         map[phone] = user
     }
 
+    fun importUsers(lines: List<String>): List<User?> {
+        val users = arrayListOf<User?>()
+        lines.forEach { line ->
+            if (line.isBlank()) {
+                users.add(null)
+            } else {
+                val (fullName, email, salt_hash, phone) = line.split(";")
+                users.add(User.importUser(fullName, email, salt_hash, phone))
+            }
+        }
+        return users
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun clearHolder() {
         map.clear()

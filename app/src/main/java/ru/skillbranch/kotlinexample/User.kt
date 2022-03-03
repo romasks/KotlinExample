@@ -66,6 +66,24 @@ class User private constructor(
         sendAccessCodeToUser(rawPhone, code)
     }
 
+    // For import from cvs
+    constructor(
+        firstName: String,
+        lastName: String?,
+        email: String?,
+        rawPhone: String?,
+        saltPasswordHash: String
+    ) : this(firstName, lastName, email, rawPhone, meta = mapOf("auth" to "cvs")) {
+        println("Secondary constructor fro imported users")
+        saltPasswordHash.split(":").apply {
+            salt = this[0]
+            passwordHash = this[1]
+        }
+        if (rawPhone != null) {
+            accessCode = generateAccessCode()
+        }
+    }
+
     init {
         println("First init block, primary constructor was called")
 
@@ -148,6 +166,16 @@ class User private constructor(
                 !email.isNullOrBlank() && !password.isNullOrBlank() -> User(firstName, lastName, email, password)
                 else -> throw IllegalArgumentException("Email or phone must not be null or blank")
             }
+        }
+
+        fun importUser(
+            fullName: String,
+            email: String?,
+            saltPasswordHash: String,
+            phone: String?
+        ): User {
+            val (firstName, lastName) = fullName.fullNameToPair()
+            return User(firstName, lastName, email, phone, saltPasswordHash)
         }
 
         private fun String.fullNameToPair(): Pair<String, String?> =
