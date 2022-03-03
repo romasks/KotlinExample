@@ -13,13 +13,13 @@ import org.junit.Test
 class ExampleUnitTest {
 
     /**
-    Добавьте метод в UserHolder для очистки значений UserHolder после выполнения каждого теста,
-    это необходимо чтобы тесты можно было запускать одновременно
+        Добавьте метод в UserHolder для очистки значений UserHolder после выполнения каждого теста,
+        это необходимо чтобы тесты можно было запускать одновременно
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun clearHolder(){
-    map.clear()
-    }
+        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+        fun clearHolder(){
+            map.clear()
+        }
      */
     @After
     fun after() {
@@ -79,7 +79,7 @@ class ExampleUnitTest {
         """.trimIndent()
 
         assertEquals(expectedInfo, user.userInfo)
-        Assert.assertNotNull(user.accessCode)
+        assertNotNull(user.accessCode)
         assertEquals(6, user.accessCode?.length)
     }
 
@@ -149,7 +149,7 @@ class ExampleUnitTest {
 
         val failResult = holder.loginUser("john_doe@unknown.com", "test")
 
-        Assert.assertNull(failResult)
+        assertNull(failResult)
     }
 
     @Test
@@ -159,7 +159,7 @@ class ExampleUnitTest {
 
         val failResult = holder.loginUser("john_cena@unknown.com", "test")
 
-        Assert.assertNull(failResult)
+        assertNull(failResult)
     }
 
     @Test
