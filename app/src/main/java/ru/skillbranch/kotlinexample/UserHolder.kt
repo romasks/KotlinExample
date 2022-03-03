@@ -48,7 +48,7 @@ object UserHolder {
     }
 
     fun importUsers(lines: List<String>): List<User> = lines.map { line ->
-        val (fullName, email, salt_hash, phone) = line.split(";")
+        val (fullName, email, salt_hash, phone) = line.split(";").map { it.trim() }
         User.importUser(fullName, email, salt_hash, phone)
     }
 
